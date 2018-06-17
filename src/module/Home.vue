@@ -15,7 +15,7 @@
     <hr/>
 
     <p>
-      Your Funds: {{funds}}
+      Your Funds: {{funds | currency}}
     </p>
   </div>
 </template>
