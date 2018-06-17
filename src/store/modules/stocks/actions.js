@@ -4,7 +4,7 @@ import StocksData from '../../data/stocks'
 const actions = {
   buyStocks: ({commit}, order) => {
     console.log('stocks/buyStocks', order)
-    commit('portfolio/buyStock', order);
+    commit('portfolio/buyStock', order, { root: true });
   },
   initStocks: ({commit}) => {
     commit('setStocks', StocksData);

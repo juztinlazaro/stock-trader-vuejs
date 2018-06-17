@@ -16,6 +16,8 @@
           <a class="nav-link">Stocks</a>
         </router-link>
       </ul>
+
+      <strong class="navbar-text navbar-right">Funds: {{funds}}</strong>
       
       <ul class="nav navbar-nav navbar-right">
         <li><a class="nav-link">End of the day</a></li>
@@ -34,3 +36,13 @@
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  computed: {
+    funds() {
+      return this.$store.getters['portfolio/funds']
+    }
+  }
+}
+</script>
