@@ -24,8 +24,8 @@ export const routes = [
       default: Stocks,
     },
   },
-  // {
-  //   path: '*',
-  //   redirect: '/',
-  // },
+  {
+    path: '*',
+    redirect: '/',
+  },
 ]
