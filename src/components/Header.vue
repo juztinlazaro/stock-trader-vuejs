@@ -21,15 +21,19 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li><a class="nav-link" @click="endDay">End of the day</a></li>
-        <li class="dropdown">
-          <a href="3" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
+        <li 
+          class="dropdown"
+          :class="{open: isDropDownOpen}"
+          @click="handleDropDown"
+          >
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
             aria-haspopup="true" aria-expanded="false">
             Save & load <span class="caret"></span>
           </a>
 
           <ul class="dropdown-menu">
-            <li><a className="nav-link">Save data</a></li>
-            <li><a className="nav-link">Load data</a></li>
+            <li><a className="nav-link" @click="saveData">Save data</a></li>
+            <li><a className="nav-link" @click="loadData">Load data</a></li>
           </ul>
         </li>
       </ul>
@@ -41,6 +45,11 @@
 import { mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      isDropDownOpen: false,
+    }
+  },
   computed: {
     funds() {
       return this.$store.getters['portfolio/funds']
@@ -48,11 +57,32 @@ export default {
   },
   methods: {
     ...mapActions({
-      randomizeStocks: 'stocks/randomizeStocks'
+      randomizeStocks: 'stocks/randomizeStocks',
+      fetchData: 'shared/loadData',
     }),
     endDay() {
       this.randomizeStocks();
-    }
+    },
+    handleDropDown() {
+      return this.isDropDownOpen = !this.isDropDownOpen;
+    },
+    saveData() {
+      const data = {
+        funds: this.$store.getters['portfolio/funds'],
+        stockPortfolio: this.$store.getters['portfolio/stockPortfolio'],
+        stocks: this.$store.getters['stocks/stocks']
+      };
+
+      this.$http.put('data.json', data)
+        .then(result => console.log(result))
+        .catch(error => console.log(error));
+    },
+    loadData() {
+      this.fetchData();
+    },
+  },
+  created() {
+    this.fetchData();
   }
 }
 </script>

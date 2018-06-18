@@ -3,7 +3,9 @@
       <Header></Header>
       <div class="row">
         <div class="col-lg-12">
-          <router-view></router-view>
+          <transition name="slide" mode="out-in">
+            <router-view></router-view>
+          </transition>
         </div>
       </div>
     </div>
