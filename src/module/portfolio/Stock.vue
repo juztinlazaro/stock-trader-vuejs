@@ -22,7 +22,7 @@
             <button
               class="btn btn-success"
               @click="sellStock"
-              :disabled="insuffiencientQuantity || quantity <= 0 || Number.isInteger(quantity)">
+              :disabled="insuffiencientQuantity || quantity <= 0 || !Number.isInteger(quantity)">
               {{insuffiencientQuantity ? 'Not Stocks' : 'Sell'}}
             </button>
           </div>
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       quantity: 0,
-    }
+    };
   },
   computed: {
     insuffiencientQuantity() {
@@ -52,11 +52,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(
-      {
-        placeSellOrder: 'portfolio/sellStocks',
-      }
-    ),
+    ...mapActions({
+      placeSellOrder: 'portfolio/sellStocks',
+    }),
     sellStock() {
       const order = {
         stockId: this.stock.id,
@@ -64,10 +62,10 @@ export default {
         quantity: this.quantity,
       };
 
-      this.placeSellOrder(order)
+      this.placeSellOrder(order);
       this.quantity = 0;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
